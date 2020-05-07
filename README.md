@@ -1,1 +1,1 @@
-# catalyst-.Go
+# catalyst.Go
