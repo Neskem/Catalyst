@@ -173,3 +173,16 @@ func GetRowKey(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody 
 	requestJson.HbaseRowKey = choose + "_" + tmpCt + "_" + id
 	return requestJson
 }
+
+func UrlAppendUserInfo(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody {
+	if UserAge, err := strconv.Atoi(requestJson.UserAge); err == nil {
+		requestJson.UserAgeInt = UserAge
+	}
+	if requestJson.UserGender != "" {
+		requestJson.UserGender = strings.ToUpper(requestJson.UserGender)
+	}
+	if requestJson.UserCountry != "" {
+		requestJson.UserCountry = strings.ToUpper(requestJson.UserCountry)
+	}
+	return requestJson
+}

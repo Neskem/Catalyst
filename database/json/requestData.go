@@ -20,46 +20,52 @@ type FootPrintRequestBody struct {
 	UrlOg string `json:"url_og,omitempty"`
 	UrlPageId string `json:"url_pageid" binding:"required"`
 
-	UrlCanonicalDecode string `json:"url_canonical(decode)"`
-	ReferrerDecode string `json:"referrer(decode)"`
-	UrlPageIdDecode string `json:"url_pageid(decode)"`
-	UrlDecode string `json:"url(decode)"`
-	UrlOgDecode string `json:"url_og(decode)"`
-	UrlPageIdHostname string `json:"url_pageid_hostname"`
-	UrlHostname string `json:"url_hostname"`
-	UrlCanonicalHostname string `json:"url_canonical_hostname"`
-	UrlOgHostname string `json:"url_og_hostname"`
-	ReferrerHostname string `json:"referrer_hostname"`
+	UrlCanonicalDecode string `json:"url_canonical(decode),omitempty"`
+	ReferrerDecode string `json:"referrer(decode),omitempty"`
+	UrlPageIdDecode string `json:"url_pageid(decode),omitempty"`
+	UrlDecode string `json:"url(decode),omitempty"`
+	UrlOgDecode string `json:"url_og(decode),omitempty"`
+	UrlPageIdHostname string `json:"url_pageid_hostname,omitempty"`
+	UrlHostname string `json:"url_hostname,omitempty"`
+	UrlCanonicalHostname string `json:"url_canonical_hostname,omitempty"`
+	UrlOgHostname string `json:"url_og_hostname,omitempty"`
+	ReferrerHostname string `json:"referrer_hostname,omitempty"`
 
-	Ua string `json:"ua"`
-	UaBrowserFamily string `json:"ua_browser_family"`
-	UaBrowserVersionMajor string `json:"ua_browser_version_major"`
-	UaBrowserVersionMinor string `json:"ua_browser_version_minor"`
-	UaBrowserVersionBuild string `json:"ua_browser_version_build"`
-	UaBrowserVersionString string `json:"ua_browser_version_string"`
-	UaOsFamily string `json:"ua_os_family"`
-	UaOsVersionMajor string `json:"ua_os_version_major"`
-	UaOsVersionMinor string `json:"ua_os_version_minor"`
-	UaOsVersionBuild string `json:"ua_os_version_build"`
-	UaOsVersionString string `json:"ua_os_version_string"`
-	UaDeviceFamily string `json:"ua_device_family"`
-	UaDeviceBrand string `json:"ua_device_brand"`
-	UaDeviceModel string `json:"ua_device_model"`
-	UaIsMobile bool `json:"ua_is_mobile"`
-	UaIsTablet bool `json:"ua_is_tablet"`
-	UaIsTouchCapable bool `json:"ua_is_touch_capable"`
-	UaIsPc bool `json:"ua_is_pc"`
-	UaIsBot bool `json:"ua_is_bot"`
+	Ua string `json:"ua,omitempty"`
+	UaBrowserFamily string `json:"ua_browser_family,omitempty"`
+	UaBrowserVersionMajor string `json:"ua_browser_version_major,omitempty"`
+	UaBrowserVersionMinor string `json:"ua_browser_version_minor,omitempty"`
+	UaBrowserVersionBuild string `json:"ua_browser_version_build,omitempty"`
+	UaBrowserVersionString string `json:"ua_browser_version_string,omitempty"`
+	UaOsFamily string `json:"ua_os_family,omitempty"`
+	UaOsVersionMajor string `json:"ua_os_version_major,omitempty"`
+	UaOsVersionMinor string `json:"ua_os_version_minor,omitempty"`
+	UaOsVersionBuild string `json:"ua_os_version_build,omitempty"`
+	UaOsVersionString string `json:"ua_os_version_string,omitempty"`
+	UaDeviceFamily string `json:"ua_device_family,omitempty"`
+	UaDeviceBrand string `json:"ua_device_brand,omitempty"`
+	UaDeviceModel string `json:"ua_device_model,omitempty"`
+	UaIsMobile bool `json:"ua_is_mobile,omitempty"`
+	UaIsTablet bool `json:"ua_is_tablet,omitempty"`
+	UaIsTouchCapable bool `json:"ua_is_touch_capable,omitempty"`
+	UaIsPc bool `json:"ua_is_pc,omitempty"`
+	UaIsBot bool `json:"ua_is_bot,omitempty"`
 
-	Ip string `json:"ip"`
-	IpXForwaredFor string `json:"ip_X-Forwarded-For"`
-	IpXRealIp string `json:"ip_X-Real-Ip"`
+	Ip string `json:"ip,omitempty"`
+	IpXForwaredFor string `json:"ip_X-Forwarded-For,omitempty"`
+	IpXRealIp string `json:"ip_X-Real-Ip,omitempty"`
 
-	PageId string `json:"page_id"`
+	PageId string `json:"page_id,omitempty"`
 
-	CreationTime string `json:"creation_time"`
+	CreationTime string `json:"creation_time,omitempty"`
 
-	HbaseRowKey string `json:"hbase_rowkey"`
+	HbaseRowKey string `json:"hbase_rowkey,omitempty"`
+
+	// Only for profile_oath api
+	UserAge string `json:"user_age,omitempty"`
+	UserAgeInt int `json:"user_age(int),omitempty"`
+	UserGender string `json:"user_gender,omitempty"`
+	UserCountry string `json:"user_country,omitempty"`
 }
 
 type FootPrintRequestHeader struct {
