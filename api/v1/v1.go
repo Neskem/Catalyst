@@ -7,6 +7,7 @@ func ApplyRoutes(r *gin.Engine) {
 	{
 		v1.POST("/footprint", footprint)
 		v1.POST("/profile_oath", profileOath)
+		v1.POST("/wifi", wifi)
 		v1.GET("/cat_trid", catTrid)
 	}
 }

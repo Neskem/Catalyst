@@ -61,11 +61,16 @@ type FootPrintRequestBody struct {
 
 	HbaseRowKey string `json:"hbase_rowkey,omitempty"`
 
-	// Only for profile_oath api
+	// Only use for profile_oath api
 	UserAge string `json:"user_age,omitempty"`
 	UserAgeInt int `json:"user_age(int),omitempty"`
 	UserGender string `json:"user_gender,omitempty"`
 	UserCountry string `json:"user_country,omitempty"`
+
+	// Only use for wifi api
+	WLanUserAge string `json:"wlan_userage,omitempty"`
+	WLanUserAgeLowerBound int `json:"wlan_userage_lower_bound,omitempty"`
+	WLanUserAgeUpperBound int `json:"wlan_userage_upper_bound,omitempty"`
 }
 
 type FootPrintRequestHeader struct {

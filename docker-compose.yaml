@@ -14,7 +14,7 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: 192.168.30.108
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       # topicName:PartitionCount:ReplicationFactor
-      KAFKA_CREATE_TOPICS: footprint:1:1, profile_oath:1:1
+      KAFKA_CREATE_TOPICS: footprint:1:1, profile_oath:1:1, wifi:1:1
   kafka-manager:
     image: sheepkiller/kafka-manager
     environment:
