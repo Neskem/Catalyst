@@ -1,6 +1,5 @@
 package json
 
-
 type FootPrintRequestBody struct {
 	DeviceType string `json:"device_type,omitempty"`
 	Fp string `json:"fp" binding:"required"`
@@ -71,57 +70,13 @@ type FootPrintRequestBody struct {
 	WLanUserAge string `json:"wlan_userage,omitempty"`
 	WLanUserAgeLowerBound int `json:"wlan_userage_lower_bound,omitempty"`
 	WLanUserAgeUpperBound int `json:"wlan_userage_upper_bound,omitempty"`
-}
 
-type FootPrintRequestHeader struct {
-	XForwardedFor string `json:"X-Forwarded-For,omitempty"`
-	XRealIp string `json:"X-Real-Ip,omitempty"`
-}
-
-type FootPrintExtractData struct {
-	UrlCanonicalDecode string `json:"url_canonical(decode)"`
-	ReferrerDecode string `json:"referrer(decode)"`
-	UrlPageIdDecode string `json:"url_pageid(decode)"`
-	UrlDecode string `json:"url(decode)"`
-	UrlOgDecode string `json:"url_og(decode)"`
-}
-
-type FootPrintAgentData struct {
-	Ua string `json:"ua"`
-	UaBrowserFamily string `json:"ua_browser_family"`
-	UaBrowserVersionMajor string `json:"ua_browser_version_major"`
-	UaBrowserVersionMinor string `json:"ua_browser_version_minor"`
-	UaBrowserVersionBuild string `json:"ua_browser_version_build"`
-	UaBrowserVersionString string `json:"ua_browser_version_string"`
-	UaOsFamily string `json:"ua_os_family"`
-	UaOsVersionMajor string `json:"ua_os_version_major"`
-	UaOsVersionMinor string `json:"ua_os_version_minor"`
-	UaOsVersionBuild string `json:"ua_os_version_build"`
-	UaOsVersionString string `json:"ua_os_version_string"`
-	UaDeviceFamily string `json:"ua_device_family"`
-	UaDeviceBrand string `json:"ua_device_brand"`
-	UaDeviceModel string `json:"ua_device_model"`
-	UaIsMobile string `json:"ua_is_mobile"`
-	UaIsTablet string `json:"ua_is_tablet"`
-	UaIsTouchCapable string `json:"ua_is_touch_capable"`
-	UaIsPc string `json:"ua_is_pc"`
-	UaIsBot string `json:"ua_is_bot"`
-}
-
-type FootPrintClientIp struct {
-	Ip string `json:"ip"`
-	IpXForwaredFor string `json:"ip_X-Forwarded-For"`
-	IpXRealIp string `json:"ip_X-Real-Ip"`
-}
-
-type FootPrintPageId struct {
-	PageId string `json:"page_id"`
-}
-
-type FootPrintTpeNow struct {
-	CreationTime string `json:"creation_time"`
-}
-
-type FootPrintRowKey struct {
-	HbaseRowKey string `json:"hbase_rowkey"`
+	// Only use for ads api
+	AdsConfig string `json:"ads_config,omitempty"`
+	AdsKeyword string `json:"ads_keyword,omitempty"`
+	AdsSource string `json:"ads_source,omitempty"`
+	AdsType string `json:"ads_type,omitempty"`
+	Ads []map[string]interface{} `json:"ads,omitempty"`
+	AdsBatchId string `json:"ads_batchid,omitempty"`
+	AdsBatchSize string `json:"ads_batchsize,omitempty"`
 }

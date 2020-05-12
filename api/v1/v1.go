@@ -9,6 +9,7 @@ func ApplyRoutes(r *gin.Engine) {
 		v1.POST("/profile_oath", profileOath)
 		v1.POST("/wifi", wifi)
 		v1.POST("/open_id", openId)
+		v1.POST("/ads", ads)
 		v1.GET("/cat_trid", catTrid)
 	}
 }

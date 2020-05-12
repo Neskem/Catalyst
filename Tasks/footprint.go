@@ -2,7 +2,7 @@ package Tasks
 
 import (
 	"catalyst.Go/common"
-	"catalyst.Go/database/json"
+	j "catalyst.Go/database/json"
 	guuid "github.com/google/uuid"
 	"github.com/ua-parser/uap-go/uaparser"
 	"math/rand"
@@ -12,7 +12,9 @@ import (
 	"time"
 )
 
-func UrlExtractionJudgement(requestJson json.FootPrintRequestBody)(json.FootPrintRequestBody, bool){
+var KafkaTopicAds = "ads"
+
+func UrlExtractionJudgement(requestJson j.FootPrintRequestBody)(j.FootPrintRequestBody, bool){
 	requestJson, rtn := UrlExtractionPageId(requestJson)
 	if rtn == false {
 		return requestJson, false
@@ -24,7 +26,7 @@ func UrlExtractionJudgement(requestJson json.FootPrintRequestBody)(json.FootPrin
 	return requestJson, true
 }
 
-func UrlExtractionPageId(requestJson json.FootPrintRequestBody)(json.FootPrintRequestBody, bool){
+func UrlExtractionPageId(requestJson j.FootPrintRequestBody)(j.FootPrintRequestBody, bool){
 	if requestJson.UrlPageId != "" {
 		tmpDecode, err := url.QueryUnescape(requestJson.UrlPageId)
 		if err != nil {
@@ -45,7 +47,7 @@ func UrlExtractionPageId(requestJson json.FootPrintRequestBody)(json.FootPrintRe
 	return requestJson, false
 }
 
-func UrlExtractionUrl(requestJson json.FootPrintRequestBody)(json.FootPrintRequestBody, bool){
+func UrlExtractionUrl(requestJson j.FootPrintRequestBody)(j.FootPrintRequestBody, bool){
 	if requestJson.Url != "" {
 		tmpDecode, err := url.QueryUnescape(requestJson.Url)
 		if err != nil {
@@ -65,7 +67,7 @@ func UrlExtractionUrl(requestJson json.FootPrintRequestBody)(json.FootPrintReque
 	return requestJson, false
 }
 
-func UrlExtractionUrlOg(requestJson json.FootPrintRequestBody)(json.FootPrintRequestBody, bool){
+func UrlExtractionUrlOg(requestJson j.FootPrintRequestBody)(j.FootPrintRequestBody, bool){
 	if requestJson.UrlOg != "" {
 		tmpDecode, err := url.QueryUnescape(requestJson.UrlOg)
 		if err != nil {
@@ -85,7 +87,7 @@ func UrlExtractionUrlOg(requestJson json.FootPrintRequestBody)(json.FootPrintReq
 	return requestJson, false
 }
 
-func UrlExtractionUrlCanonical(requestJson json.FootPrintRequestBody)(json.FootPrintRequestBody, bool){
+func UrlExtractionUrlCanonical(requestJson j.FootPrintRequestBody)(j.FootPrintRequestBody, bool){
 	if requestJson.UrlCanonical != "" {
 		tmpDecode, err := url.QueryUnescape(requestJson.UrlCanonical)
 		if err != nil {
@@ -105,7 +107,7 @@ func UrlExtractionUrlCanonical(requestJson json.FootPrintRequestBody)(json.FootP
 	return requestJson, false
 }
 
-func UrlExtractionReferrer(requestJson json.FootPrintRequestBody)(json.FootPrintRequestBody, bool){
+func UrlExtractionReferrer(requestJson j.FootPrintRequestBody)(j.FootPrintRequestBody, bool){
 	if requestJson.Referrer != "" {
 		tmpDecode, err := url.QueryUnescape(requestJson.Referrer)
 		if err != nil {
@@ -125,7 +127,7 @@ func UrlExtractionReferrer(requestJson json.FootPrintRequestBody)(json.FootPrint
 	return requestJson, false
 }
 
-func UserAgentExtraction(requestJson json.FootPrintRequestBody, client *uaparser.Client) json.FootPrintRequestBody {
+func UserAgentExtraction(requestJson j.FootPrintRequestBody, client *uaparser.Client) j.FootPrintRequestBody {
 	requestJson.UaBrowserFamily = client.UserAgent.Family
 	requestJson.UaBrowserVersionMajor = client.UserAgent.Major
 	requestJson.UaBrowserVersionMinor = client.UserAgent.Minor
@@ -151,66 +153,25 @@ func UserAgentExtraction(requestJson json.FootPrintRequestBody, client *uaparser
 	return requestJson
 }
 
-func UrlExtractPageId(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody {
+func UrlExtractPageId(requestJson j.FootPrintRequestBody) j.FootPrintRequestBody {
 	if requestJson.UrlPageIdDecode != "" {
 		requestJson.PageId = common.GetPageID(requestJson.UrlPageIdDecode)
 	}
 	return requestJson
 }
 
-func UrlAppendDatetime(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody {
+func UrlAppendDatetime(requestJson j.FootPrintRequestBody) j.FootPrintRequestBody {
 	loc, _ := time.LoadLocation("Asia/Taipei")
 	dateTime := time.Now().In(loc)
 	requestJson.CreationTime = strconv.Itoa(dateTime.Year()) + "-" + dateTime.Month().String() + "-" + strconv.Itoa(dateTime.Day()) + "T" + strconv.Itoa(dateTime.Hour()) + ":" + strconv.Itoa(dateTime.Minute()) + ":" + strconv.Itoa(dateTime.Second()) + " +0800"
 	return requestJson
 }
 
-func GetRowKey(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody {
+func GetRowKey(requestJson j.FootPrintRequestBody) j.FootPrintRequestBody {
 	prefixAlpha := [7]string{"a", "b", "c", "d", "e", "f", "g"}
 	choose := prefixAlpha[rand.Intn(len(prefixAlpha))]
 	id := strings.ReplaceAll(guuid.New().String(), "-", "", )
 	tmpCt := requestJson.CreationTime[:19]
 	requestJson.HbaseRowKey = choose + "_" + tmpCt + "_" + id
-	return requestJson
-}
-
-func UrlAppendUserInfo(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody {
-	if UserAge, err := strconv.Atoi(requestJson.UserAge); err == nil {
-		requestJson.UserAgeInt = UserAge
-	}
-	if requestJson.UserGender != "" {
-		requestJson.UserGender = strings.ToUpper(requestJson.UserGender)
-	}
-	if requestJson.UserCountry != "" {
-		requestJson.UserCountry = strings.ToUpper(requestJson.UserCountry)
-	}
-	return requestJson
-}
-
-func UrlAppendWifiInfo(requestJson json.FootPrintRequestBody) json.FootPrintRequestBody {
-	if requestJson.WLanUserAge != "" {
-		wLanUser := strings.Split(requestJson.WLanUserAge, "-")
-		if len(wLanUser) > 0 {
-			if WLanUserAgeLowerBound, err := strconv.Atoi(wLanUser[0]); err ==nil {
-				requestJson.WLanUserAgeLowerBound = WLanUserAgeLowerBound
-			} else {
-				if strings.Contains(wLanUser[0], "以上") {
-					if WLanUserAgeLowerBound, err := strconv.Atoi(strings.ReplaceAll(wLanUser[0], "以上", "")); err ==nil {
-						requestJson.WLanUserAgeLowerBound = WLanUserAgeLowerBound
-					}
-				}
-				if strings.Contains(wLanUser[0], "以下") {
-					if WLanUserAgeUpperBound, err := strconv.Atoi(strings.ReplaceAll(wLanUser[0], "以下", "")); err ==nil {
-						requestJson.WLanUserAgeUpperBound = WLanUserAgeUpperBound
-					}
-				}
-			}
-		}
-		if len(wLanUser) > 1 {
-			if WLanUserAgeUpperBound, err := strconv.Atoi(wLanUser[1]); err ==nil {
-				requestJson.WLanUserAgeUpperBound = WLanUserAgeUpperBound
-			}
-		}
-	}
 	return requestJson
 }
