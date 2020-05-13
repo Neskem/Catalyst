@@ -86,4 +86,10 @@ type FootPrintRequestBody struct {
 
 	// Only use for highlighted_text api
 	HighLightedText string `json:"highlightedtext,omitempty"`
+
+	// Only use for openlink api
+	OpenLinkHref string `json:"openlink_href,omitempty"`
+	OpenLinkText string `json:"openlink_text,omitempty"`
+	OpenLinkImgAlt string `json:"openlink_img_alt,omitempty"`
+	OpenLinkImgSrc string `json:"openlink_img_src,omitempty"`
 }

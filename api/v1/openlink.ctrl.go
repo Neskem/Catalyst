@@ -14,9 +14,9 @@ import (
 	"strings"
 )
 
-var KafkaTopicHighLightedText = "highlighted_text"
+var KafkaTopicOpenLink = "openlink"
 
-func highlightedText(c *gin.Context) {
+func openLink(c *gin.Context) {
 	var requestBody j.FootPrintRequestBody
 	if err := c.BindJSON(&requestBody); err != nil {
 		fmt.Println(err)
@@ -62,10 +62,19 @@ func highlightedText(c *gin.Context) {
 	requestBody = Tasks.UrlAppendDatetime(requestBody)
 	requestBody = Tasks.GetRowKey(requestBody)
 
-	if requestBody.HighLightedText == "" {
+	if requestBody.OpenLinkHref == "" && requestBody.OpenLinkText == "" &&
+		requestBody.OpenLinkImgAlt == "" && requestBody.OpenLinkImgSrc == "" {
 		c.AbortWithStatus(500)
 		return
 	}
+	if strings.TrimLeft(requestBody.OpenLinkHref, " ") == "" &&
+		strings.TrimLeft(requestBody.OpenLinkText, " ") == "" &&
+		strings.TrimLeft(requestBody.OpenLinkImgAlt, " ") == "" &&
+		strings.TrimLeft(requestBody.OpenLinkImgSrc, " ") == "" {
+		c.AbortWithStatus(500)
+		return
+	}
+
 
 	kafkaAddress := os.Getenv("KAFKA_ADDRESS")
 	producer := kafka.Producer(kafkaAddress)
@@ -74,7 +83,7 @@ func highlightedText(c *gin.Context) {
 		c.AbortWithStatus(401)
 		return
 	}
-	kafka.SendMessage(producer, KafkaTopicHighLightedText, message, requestBody.HbaseRowKey)
+	kafka.SendMessage(producer, KafkaTopicOpenLink, message, requestBody.HbaseRowKey)
 	c.AbortWithStatus(200)
 	return
 }
