@@ -96,4 +96,7 @@ type FootPrintRequestBody struct {
 	// Only use for session_stay api
 	SessionStay string `json:"session_stay,omitempty"`
 	SessionStayInt int `json:"session_stay(int),omitempty"`
+
+	// Only use for js_err api
+	ErrMsg string `json:"err_msg,omitempty"`
 }

@@ -14,6 +14,7 @@ func ApplyRoutes(r *gin.Engine) {
 		v1.POST("/highlighted_text", highlightedText)
 		v1.POST("/openlink", openLink)
 		v1.POST("/session_stay", sessionStay)
+		v1.POST("/js_err", jsErr)
 		v1.GET("/cat_trid", catTrid)
 	}
 }
