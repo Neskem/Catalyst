@@ -79,4 +79,8 @@ type FootPrintRequestBody struct {
 	Ads []map[string]interface{} `json:"ads,omitempty"`
 	AdsBatchId string `json:"ads_batchid,omitempty"`
 	AdsBatchSize string `json:"ads_batchsize,omitempty"`
+
+	// Only use for conversion api
+	AdsSeqNum string `json:"ads_seqnum,omitempty"`
+	AdsClickUrl string `json:"ads_clickurl,omitempty"`
 }
