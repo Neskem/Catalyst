@@ -92,4 +92,8 @@ type FootPrintRequestBody struct {
 	OpenLinkText string `json:"openlink_text,omitempty"`
 	OpenLinkImgAlt string `json:"openlink_img_alt,omitempty"`
 	OpenLinkImgSrc string `json:"openlink_img_src,omitempty"`
+
+	// Only use for session_stay api
+	SessionStay string `json:"session_stay,omitempty"`
+	SessionStayInt int `json:"session_stay(int),omitempty"`
 }
