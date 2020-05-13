@@ -11,6 +11,7 @@ func ApplyRoutes(r *gin.Engine) {
 		v1.POST("/open_id", openId)
 		v1.POST("/ads", ads)
 		v1.POST("/conversion",  conversion)
+		v1.POST("/highlighted_text", highlightedText)
 		v1.GET("/cat_trid", catTrid)
 	}
 }

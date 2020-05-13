@@ -83,4 +83,7 @@ type FootPrintRequestBody struct {
 	// Only use for conversion api
 	AdsSeqNum string `json:"ads_seqnum,omitempty"`
 	AdsClickUrl string `json:"ads_clickurl,omitempty"`
+
+	// Only use for highlighted_text api
+	HighLightedText string `json:"highlightedtext,omitempty"`
 }
