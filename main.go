@@ -13,12 +13,6 @@ func main() {
 		panic(err1)
 	}
 	app := gin.Default()
-	app.GET("/hc", func(c *gin.Context) {
-		name := c.Param("name")
-		c.JSON(200, gin.H{
-			"message": "hello " + name,
-		})
-	})
 	v1.ApplyRoutes(app)
 	port := os.Getenv("PORT")
 	err2 := app.Run(":" + port)

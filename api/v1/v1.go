@@ -16,5 +16,11 @@ func ApplyRoutes(r *gin.Engine) {
 		v1.POST("/session_stay", sessionStay)
 		v1.POST("/js_err", jsErr)
 		v1.GET("/cat_trid", catTrid)
+		v1.GET("/hc", func(c *gin.Context) {
+			name := c.Param("name")
+			c.JSON(200, gin.H{
+				"message": "hello " + name,
+			})
+		})
 	}
 }
